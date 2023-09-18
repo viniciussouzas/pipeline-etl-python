@@ -42,14 +42,16 @@ for user in users:
   news = generate_ai_news(user)
   print(news)
   user['news'].append({
-      "icon": "https://digitalinnovationone.github.io/santander-dev-week-2023-api/icons/credit.svg",
       "description": news
   })
 
 # load
 def update_user(user):
   response = requests.put(f"{sdw_api_url}/users/{user['id']}", json=user)
-  return True if response.status_code == 200 else False
+  if response.status_code == 200:
+    return True
+  else:
+    return False
 
 for user in users:
   success = update_user(user)
